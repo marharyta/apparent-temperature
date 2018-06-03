@@ -6,5 +6,11 @@
   "repository": "https://github.com/marharyta/apprent-temperature",
   "author": "marharyta",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^23.1.0"
+  }
 }

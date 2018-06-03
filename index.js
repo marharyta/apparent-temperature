@@ -76,3 +76,4 @@ const convertTemperature = ({ t, fromCelcius, fromFahrenheit, fromKelvin, toCelc
 console.log(convertTemperature(obj));
 
 
+module.exports = convertTemperature;
