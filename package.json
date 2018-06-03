@@ -1,0 +1,10 @@
+{
+  "name": "apparent-temperature",
+  "version": "1.0.0",
+  "description": "Apparent temperature calculator",
+  "main": "index.js",
+  "repository": "https://github.com/marharyta/apprent-temperature",
+  "author": "marharyta",
+  "license": "MIT",
+  "private": false
+}
