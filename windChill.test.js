@@ -8,5 +8,5 @@ test('Calculate wind Chill', () => {
 
 test('Input empty object', () => {
     const onlyTemperature = {};
-    expect(newWindChill(onlyTemperature)).toThrow();
+    expect(newWindChill).toThrow();
 });
