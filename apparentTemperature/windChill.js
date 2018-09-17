@@ -4,7 +4,7 @@ const obj = {
   t: 0,
   withCelcius: false,
   withFahrenheit: false,
-  windSpeed: false,
+  windSpeed: 0,
   kmH: false,
   ms: false,
   mph: false,
