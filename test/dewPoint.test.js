@@ -29,3 +29,8 @@ test('calculate dew point ', () => {
 
 // outside table
 // to check calculations http://www.dpcalc.org/
+
+test('calculate dew point ', () => {
+    expect(math.round(calculateDewPoint(16, 40), 0)).toBe(2);
+    expect(math.round(calculateDewPoint(16, 40), 2)).toBe(2.4);
+});
