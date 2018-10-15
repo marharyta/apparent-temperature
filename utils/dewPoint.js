@@ -5,63 +5,41 @@ const math = require('mathjs');
 // rh - relative humidity in %
 // rh >= 50%
 
-//td = ( B*( ln(rh/100) + (A*ta / (B + ta)) ) / (A - ln(rh/100) -  (A*ta / (B + ta))) )
+//const TD1 = (B1 * Math.log(Math.exp((A1 * T) / (B1 + T)) * (RH / 100))) / (A1 - Math.log(Math.exp((A1 * T) / (B1 + T)) * (RH / 100)));
 // where 
 // A = 7.625,
-// B =243.04°C
+// B = 243.04°C
 // and -40°C <= t <= 50°C
 
-// ln(x ) means natural logarythms 
-
-// math.log(x, base)
-
-
-
-const calculateDewPoint = (ta, rh) => {
-
+const calculateDewPoint = (T, RH) => {
+  // calculations according to the initial formula
+  // coefficients from https://journals.ametsoc.org/doi/pdf/10.1175/BAMS-86-2-225
   // let a = 7.625;
   // let b = 243.04;
   // let c = 610.94;
+  // initial formula
+  // td = ( B*( ln(rh/100) + (A*ta / (B + ta)) ) / (A - ln(rh/100) -  (A*ta / (B + ta))) )
+  const A = 7.625;
+  const B = 243.04;
+  const y = Math.exp((A * T) / (B + T)) * (RH / 100);
+  const x = Math.log(y);
+  const TD = (B * x) / (A - x);
+  const TDD = (B * (Math.log(RH / 100) + (A * T / (B + T))) / (A - Math.log(RH / 100) - (A * T / (B + T))))
 
-  let a = 17.08085;
-  let b = 234.175;
+  // with Sonntag coefficients (1990)
+  const A1 = 17.625;
+  const B1 = 243.04;
 
-  // Sonntag coefficients (1990)
-  a=17.625;
-  b=243.12;
-  ta = 15;
-  //ta = 288.15;
-  rh = 50;
-  // let d = 10.60;
+  const y1 = Math.exp((A1 * T) / (B1 + T)) * (RH / 100);
+  const x1 = Math.log(y1);
+  const TD1 = (B1 * x1) / (A1 - x1);
 
-  let logarithmOfHumidity1 = math.log((rh/100));
+  // this if for when rh > 50%
+  // if (RH > 50) {
+  //   return T - ((100 - RH) / 5);
+  // }
 
-  let logarithmOfHumidity2 = math.exp(rh/100);
-  let temperatureAverage = (a*ta)/(b + ta);
-  let firstDeno = b*(logarithmOfHumidity2 + temperatureAverage);
-  let secondDeno = a - logarithmOfHumidity2 - temperatureAverage;
-
-  console.log('logarithmOfHumidity1', logarithmOfHumidity1);
-  console.log('logarithmOfHumidity2', logarithmOfHumidity2);  
-  console.log('temperatureAverage', temperatureAverage); 
-  console.log('firstDeno', firstDeno); 
-  console.log('secondDeno', secondDeno);  
-  console.log('dew point', firstDeno / secondDeno); 
-
-
-  let q = rh / 100;
-  let p = 6.10780 * Math.exp((17.08085 * ta)/(234.175 + ta));
-  let pd = p * q;
-
-  let tp = (-Math.log(pd/6.10780)*234.175)/(Math.log(pd/6.10780) - 17.08085);
-  console.log('calc', tp);
-  // if(rh > 50){
-  //   return ta - ((100 - rh) / 5);
-  // } else {
-    // return ta - ((100 - rh) / 5);
-    // return ( b*( math.log((rh/100), Math.E) + (a*ta / (b + ta)) ) / (a - math.log((rh/100), Math.E) -  (a*ta / (a + ta))) );
-  // let count = 0;
-
+  return TD1;
 
 
 };
