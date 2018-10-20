@@ -26,7 +26,7 @@ const calculateDewPoint = (T, RH) => {
   const TD = (B * x) / (A - x);
   const TDD = (B * (Math.log(RH / 100) + (A * T / (B + T))) / (A - Math.log(RH / 100) - (A * T / (B + T))))
 
-  // with Sonntag coefficients (1990)
+  // AERK recommendation coefficients
   const A1 = 17.625;
   const B1 = 243.04;
 
