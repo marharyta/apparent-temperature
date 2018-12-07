@@ -2,7 +2,7 @@
   Wind Chill and New Wind Chill
 */
 
-const newWindChill = require("../apparentTemperature/windChill");
+const newWindChill = require("../src/apparentTemperature/windChill");
 const math = require("mathjs");
 
 //const test = { t: 0, windSpeed: 20 };

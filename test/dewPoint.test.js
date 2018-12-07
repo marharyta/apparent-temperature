@@ -1,4 +1,4 @@
-const calculateDewPoint = require("../utils/dewPoint");
+const calculateDewPoint = require("../src/utils/dewPoint");
 const math = require("mathjs");
 
 // for the test values, check table: https://www.mrfixitbali.com/images/articleimages/dew-point-chart-full.pdf

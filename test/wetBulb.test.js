@@ -1,4 +1,4 @@
-const calculateWetBulb = require("../utils/wetBulb");
+const calculateWetBulb = require("../src/utils/wetBulb");
 const math = require("mathjs");
 
 test("calculate wet bulb ", () => {
