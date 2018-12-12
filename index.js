@@ -1,3 +1,15 @@
-import { convertTemperature } from './temperatureConvertion';
+var convertTemperature = require("./src/utils/temperatureConvertion.js");
+var dewPoint = require("./src/utils/dewPoint");
+var newWindChill = require("./src/apparentTemperature/windChill");
+var heatIndex = require("./src/apparentTemperature/heatIndex");
+var calculateHumidex = require("./src/apparentTemperature/humidex");
 
-module.exports = convertTemperature;
+//All the variable we want to expose outside needs to be property of "exports" object.
+
+exports.apparent = {
+  humidex: calculateHumidex,
+  heatIndex: heatIndex,
+  newWindChill: newWindChill,
+  dewPoint: dewPoint,
+  convertTemperature: convertTemperature
+};
