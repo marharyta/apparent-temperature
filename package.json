@@ -1,11 +1,16 @@
 {
   "name": "apparent-temperature",
+  "author": "Margarita Obraztsova",
   "version": "1.0.0",
   "description": "Apparent temperature calculator",
   "main": "index.js",
   "repository": "https://github.com/marharyta/apprent-temperature",
-  "author": "marharyta",
   "license": "MIT",
+  "keywords": [
+    "weather",
+    "temperature",
+    "air"
+  ],
   "private": false,
   "scripts": {
     "test": "jest"
@@ -15,5 +20,9 @@
   },
   "dependencies": {
     "mathjs": "^5.1.2"
+  },
+  "engines": {
+    "node": "v8.2.1",
+    "npm": "v5.3.0"
   }
 }
