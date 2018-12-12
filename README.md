@@ -1,21 +1,29 @@
-Formulas used:
+# apparent-temperature
 
-for Kelvin
-T(K) = T(°C) + 273.15
-T(°C) = T(K) - 273.15
-T(K) = (T(°F) + 459.67)× 5/9
-T(°F) = T(K) × 9/5 - 459.67
-T(°F) = T(°C) × 9/5 + 32
-T(°F) = T(°C) × 1.8 + 32
-T(°C) = (T(°F) - 32) × 5/9
-T(°C) = (T(°F) - 32) / (9/5)
-T(°C) = (T(°F) - 32) / 1.8
+![enter image description here](https://cdn0.iconfinder.com/data/icons/weather-line-19/32/Windy-512.png)
+Pure JavaScript tested library to calculate different versions of apparent temperatures.
 
-T(°F) = T(°C) × 9/5 + 32
+Includes:
 
-or
+- New Wind Chill
+- Dew Point
+- Heat Index
+- Humidex
 
-T(°F) = T(°C) × 1.8 + 32
+### Sample usage
 
+```js
+const apparent = require("./index.js");
 
+apparent.apparent.convertTemperature({
+  t: 25,
+  fromCelcius: true,
+  fromFahrenheit: false,
+  fromKelvin: false,
+  toCelcius: false,
+  toFahrenheit: true,
+  toKelvin: false
+}); // returns 77
 
+apparent.apparent.dewPoint(25, 70); // returns 19.15
+```
