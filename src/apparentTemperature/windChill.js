@@ -53,7 +53,6 @@ const newWindChill = ({
   if (t == undefined || windSpeed == undefined) {
     throw new Error("please, input temperature and wind speed");
   }
-  console.log("wind speed 1", windSpeed);
 
   if (!kmH) {
     if (ms) {
@@ -63,8 +62,6 @@ const newWindChill = ({
       windSpeed = fromMilesPerHourToKilometersPerHour(mph);
     }
   }
-
-  console.log("wind speed 2", windSpeed);
 
   if (t > 10 && !withFahrenheit) {
     throw new RangeError(
