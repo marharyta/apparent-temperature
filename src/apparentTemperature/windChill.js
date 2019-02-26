@@ -1,3 +1,6 @@
+const math = require("mathjs");
+const fromMetersPerSecondToKilometersPerHour = require("../utils/windConvertion");
+const fromMilesPerHourToKilometersPerHour = require("../utils/windConvertion");
 /*
   Wind Chill and New Wind Chill
 
@@ -49,7 +52,21 @@ const newWindChill = ({
 }) => {
   if (t == undefined || windSpeed == undefined) {
     throw new Error("please, input temperature and wind speed");
-  } else if (t > 10 && !withFahrenheit) {
+  }
+  console.log("wind speed 1", windSpeed);
+
+  if (!kmH) {
+    if (ms) {
+      // ms to km/h
+      windSpeed = fromMetersPerSecondToKilometersPerHour(ms);
+    } else if (mph) {
+      windSpeed = fromMilesPerHourToKilometersPerHour(mph);
+    }
+  }
+
+  console.log("wind speed 2", windSpeed);
+
+  if (t > 10 && !withFahrenheit) {
     throw new RangeError(
       "temperatures above 10 C are not applicable to this calculation"
     );
@@ -58,9 +75,9 @@ const newWindChill = ({
       "wind speed below 4.8 kmH are not applicable to this calculation"
     );
   } else if (withFahrenheit && mph && returnFahrenheit) {
-    return calculateNewWindChillWithFahrenheit(t, windSpeed);
+    return math.round(calculateNewWindChillWithFahrenheit(t, windSpeed), 4);
   } else {
-    return calculateNewWindChillWithCelcius(t, windSpeed);
+    return math.round(calculateNewWindChillWithCelcius(t, windSpeed), 4);
   }
 };
 
