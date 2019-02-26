@@ -40,11 +40,11 @@ const fromMetersPerSecondToFootPerMinute = v => {
 };
 
 const fromMetersPerSecondToKilometersPerHour = v => {
-  return 3.6 * v;
+  return (v * 18) / 5;
 };
 
 const fromKilometersPerHourToMetersPerSecond = v => {
-  return v / 3.6;
+  return (v * 5) / 18;
 };
 
 //  1.609344
