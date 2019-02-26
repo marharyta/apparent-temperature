@@ -54,27 +54,27 @@ const newWindChill = ({
     throw new Error("please, input temperature and wind speed");
   }
 
-  if (!kmH) {
-    if (ms) {
+  if (kmH === false) {
+    if (ms == true) {
       // ms to km/h
       windSpeed = fromMetersPerSecondToKilometersPerHour(ms);
-    } else if (mph) {
+    } else if (mph === true) {
       windSpeed = fromMilesPerHourToKilometersPerHour(mph);
     }
-  }
-
-  if (t > 10 && !withFahrenheit) {
-    throw new RangeError(
-      "temperatures above 10 C are not applicable to this calculation"
-    );
-  } else if (windSpeed < 4.8) {
-    throw new RangeError(
-      "wind speed below 4.8 kmH are not applicable to this calculation"
-    );
-  } else if (withFahrenheit && mph && returnFahrenheit) {
-    return math.round(calculateNewWindChillWithFahrenheit(t, windSpeed), 4);
   } else {
-    return math.round(calculateNewWindChillWithCelcius(t, windSpeed), 4);
+    if (t > 10 && !withFahrenheit) {
+      throw new RangeError(
+        "temperatures above 10 C are not applicable to this calculation"
+      );
+    } else if (windSpeed < 4.8) {
+      throw new RangeError(
+        "wind speed below 4.8 kmH are not applicable to this calculation"
+      );
+    } else if (withFahrenheit && mph && returnFahrenheit) {
+      return math.round(calculateNewWindChillWithFahrenheit(t, windSpeed), 4);
+    } else {
+      return math.round(calculateNewWindChillWithCelcius(t, windSpeed), 4);
+    }
   }
 };
 
