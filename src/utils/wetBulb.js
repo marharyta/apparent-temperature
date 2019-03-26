@@ -29,7 +29,6 @@ const calculateWetBulb = (ta, rh) => {
     Math.atan(rh - c3) +
     c4 * Math.pow(rh, 3 / 2) * Math.atan(c5 * rh) -
     c6;
-  // console.log("tw", tw);
   return math.round(tw, 2);
 };
 
