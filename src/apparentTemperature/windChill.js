@@ -1,81 +1,68 @@
-const math = require("mathjs");
-const fromMetersPerSecondToKilometersPerHour = require("../utils/windConvertion");
-const fromMilesPerHourToKilometersPerHour = require("../utils/windConvertion");
-/*
-  Wind Chill and New Wind Chill
+const convertTemperature = require("../utils/temperatureConvertion");
+// first
+// WCT = (12.15 + 11.6 • v10/2 - v10) • (33 - ta) (1)
+// where: ta = air temperature, in ºC; v10 = air speed at 10m high, in m/s;
+// -9ºC ≤ ta ≤ 10ºC;
+// v10 ≤ 22.3m/s
 
-  new formula for wind chill
-  NWCT = 13.12 + 0.6215*T - 11.37 * V^0.16 + 0.3965 * T * V^0.16
-  V - air speed in km/h, T <= 10 C, V >= 4.8 km/h
-  by default calculates in C and km/h
-*/
-const obj = {
-  t: 0,
-  withCelcius: false,
-  withFahrenheit: false,
-  windSpeed: 0,
-  kmH: false,
-  ms: false,
-  mph: false,
-  returnFahrenheit: false,
-  returnCelcius: false
-};
+const calculateWindChillWithCelcius = (t, v) => {
+  // return (12.1452 + 11.6222 * Math.sqrt(v) - 1.16222 * v) * (33 - t);
+  // in Watts per m2
+  // 1122.0299999999997
+  // weird output
+  //   return (
+  //     13.13 +
+  //     0.62 * t -
+  //     11.37 * Math.pow(v, 0.16) +
+  //     0.3965 * t * Math.pow(v, 0.16)
+  //   );
+  //2.5777127433839557
 
-const calculateNewWindChillWithCelcius = (t, v) => {
-  return (
-    13.12 +
-    0.6215 * t -
-    11.37 * Math.pow(v, 0.16) +
-    0.3965 * t * Math.pow(v, 0.16)
-  );
-};
+  const fromMetersPerSecondToMilesPerHour = v => {
+    return 2.23694 * v;
+  };
 
-const calculateNewWindChillWithFahrenheit = (t, v) => {
+  console.log(v, t);
+
+  v = fromMetersPerSecondToMilesPerHour(v);
+  t = convertTemperature({
+    t: t,
+    fromCelcius: true,
+    toFahrenheit: true
+  });
+
+  console.log("after", v, t);
+  // new wind chill
   return (
     35.74 +
     0.6215 * t -
     35.75 * Math.pow(v, 0.16) +
     0.4275 * t * Math.pow(v, 0.16)
   );
+
+  // this is the old way to calculate it, works for fahrenheit and mph
+  //   return (
+  //     0.081 * (3.71 * Math.pow(v, 1 / 2) + 5.81 - 0.25 * v) * (t - 91.4) + 91.4
+  //   );
+  // this one is NOT used by FINNISH meteo institute
+  // https://www.calculator.net/wind-chill-calculator.html?windspeed=5&windspeedunit=ms&airtemperature=4&airtemperatureunit=celsius&x=72&y=18
 };
 
-const newWindChill = ({
-  t,
-  withCelcius,
-  withFahrenheit,
-  windSpeed,
-  kmH,
-  ms,
-  mph,
-  returnFahrenheit,
-  returnCelcius
-}) => {
-  if (t == undefined || windSpeed == undefined) {
-    throw new Error("please, input temperature and wind speed");
-  }
+console.log(
+  Math.round(
+    convertTemperature({
+      t: calculateWindChillWithCelcius(0, 8),
+      fromFahrenheit: true,
+      toCelcius: true
+    })
+  )
+);
 
-  if (kmH === false) {
-    if (ms == true) {
-      // ms to km/h
-      windSpeed = fromMetersPerSecondToKilometersPerHour(ms);
-    } else if (mph === true) {
-      windSpeed = fromMilesPerHourToKilometersPerHour(mph);
-    }
-  } else {
-    if (t > 10 && !withFahrenheit) {
-      throw new RangeError(
-        "temperatures above 10 C are not applicable to this calculation"
-      );
-    } else if (windSpeed < 4.8) {
-      throw new RangeError(
-        "wind speed below 4.8 kmH are not applicable to this calculation"
-      );
-    } else if (withFahrenheit && mph && returnFahrenheit) {
-      return math.round(calculateNewWindChillWithFahrenheit(t, windSpeed), 4);
-    } else {
-      return math.round(calculateNewWindChillWithCelcius(t, windSpeed), 4);
-    }
-  }
-};
+// tried if fahrenheit
 
-module.exports = newWindChill;
+// t = ta - math.square(v) * (25 - ta )/ 15
+
+//
+// WCT = 13.13 + 0.62* T - 11.37 * V ^ 0.16 + 0.3965 * T * V  ^ 0.16
+
+// Wind Chill Temperature = 0.081×(3.71×V1/2 + 5.81 - 0.25×V) × (T - 91.4) + 91.4
