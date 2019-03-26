@@ -2,7 +2,7 @@
   Wind Chill and New Wind Chill
 */
 
-const newWindChill = require("../src/apparentTemperature/windChill");
+const newWindChill = require("../src/apparentTemperature/newWindChill");
 const math = require("mathjs");
 
 //const test = { t: 0, windSpeed: 20 };
@@ -88,6 +88,17 @@ test("Input too high temperature", () => {
 
 test("Input too low wind speed", () => {
   const lowWindSpeed = { t: 25, windSpeed: 2 };
+  expect(() => newWindChill(lowWindSpeed)).toThrow(RangeError);
+});
+
+test("bdbdj", () => {
+  const lowWindSpeed = {
+    withCelcius: true,
+    t: 0.82,
+    windSpeed: 2.6,
+    ms: false,
+    returnCelcius: true
+  };
   expect(() => newWindChill(lowWindSpeed)).toThrow(RangeError);
 });
 
