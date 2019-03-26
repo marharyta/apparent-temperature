@@ -1,6 +1,6 @@
 var convertTemperature = require("./src/utils/temperatureConvertion.js");
 var dewPoint = require("./src/utils/dewPoint");
-var newWindChill = require("./src/apparentTemperature/windChill");
+var newWindChill = require("./src/apparentTemperature/newWindChill");
 var heatIndex = require("./src/apparentTemperature/heatIndex");
 var calculateHumidex = require("./src/apparentTemperature/humidex");
 
